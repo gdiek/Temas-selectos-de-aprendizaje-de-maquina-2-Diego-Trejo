@@ -1,0 +1,83 @@
+---
+title: "Ejercicio"
+output:
+  html_document:
+    df_print: paged
+---
+## 17.7.1 Ejercicio 1: Supervisado o no supervisado
+Justifica si se trata de método supervisado o no supervisado y/o si es un problema de clasificación/regresión/agrupamiento, etc:
+
+**predecir resistencia a un antibiótico a partir de genes;**
+
+Respuesta: Aprendizaje supervisado, ya se tienen las etiquetas, metodo de clasificación
+
+
+**agrupar aislamientos por perfiles genéticos sin usar fenotipos;**
+
+
+Respuesta: Aprendizaje no supervisado, las etiquetas no estan dadas
+
+**representar muestras con dos coordenadas;**
+
+Respuesta: Aprendizaje no supervisado, ya que se tiene que aplicar una reducción de dimensión
+
+**predecir una concentración a partir de variables ambientales.**
+
+Repuesta: Un problema de regresión, se tienen los niveles de concentración y las variables ambientales.
+
+
+## 17.7.4 Ejercicio 4. Explora Iris
+Construye un gráfico usando las variables 2 y 4, sin colores por especie.
+
+Repite con colores.
+
+Calcula las correlaciones y elige un par de variables fuertemente correlacionadas.
+
+Explica por qué las etiquetas de especie no deben incluirse como una quinta columna numérica para PCA o clustering no supervisado.
+
+```{r}
+
+
+# Introduccion al aprendizaje no supervisado
+
+
+
+data("iris")
+X_r <- iris[,1:4]
+especie <- iris$Species
+
+
+
+muestra <- X_r[1:5,]
+
+
+D_euclid_r <- as.matrix(dist(muestra, method = "euclidean"))
+
+
+D_manh_r <- as.matrix(dist(muestra, method = "manh"))
+
+
+
+X_est_r <- scale(X_r)
+round(colMeans(X_est_r),5)
+
+round(apply(X_est_r,2,sd),5)
+
+par(mfrow=c(1,2))
+plot(X_r[,2],X_r[,4], pch=19, col = "steelblue")
+
+
+
+
+colores <- c("steelblue","darkorange","forestgreen")
+
+plot(X_r[,2],X_r[,4],pch = 19,
+     col = colores[as.integer(especie)]
+ 
+     )
+
+legend("topleft", legend = levels(especie),
+       col = colores, pch = 19, bty = "n")
+
+
+```
